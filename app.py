@@ -53,7 +53,7 @@ if(uploaded_files):
             documents = []
             with st.spinner("Processing... Please wait."):
                 for uploaded_file in uploaded_files:
-                    file_path = os.path.join(os.getcwd(),'temp', uploaded_file.name)
+                    file_path = os.path.join(os.getcwd(),'pdf', uploaded_file.name)
 
                 with open(file_path, 'wb') as f:
                     f.write(uploaded_file.getvalue())

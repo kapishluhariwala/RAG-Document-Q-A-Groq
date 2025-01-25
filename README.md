@@ -91,9 +91,8 @@ Follow these steps to set up and run the chatbot locally.
 .
 ├── app.py                # Main Streamlit app
 ├── requirements.txt      # Python dependencies
-├── temp/                 # Folder to store document data
 ├── README.md             # Project documentation
-└── pdf/                  # example pdf for upload
+└── pdf/                  # Folder to store document data
 ```
 
 ---
