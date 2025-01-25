@@ -73,7 +73,7 @@ if(uploaded_files):
 
 
 
-if not api_key:
+if not groq_api_key and not hf_token:
     st.info('Input GROQ API Key and HuggingFace Token...')
 
 else:
