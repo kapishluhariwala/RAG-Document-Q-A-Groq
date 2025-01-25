@@ -73,9 +73,9 @@ if(uploaded_files):
 
 
 
-if not groq_api_key and not hf_token:
+if (not groq_api_key or not hf_token):
     st.info('Input GROQ API Key and HuggingFace Token...')
-
+    st.stop()
 else:
     llm = ChatGroq(model=llm_select,api_key=groq_api_key,temperature=temperature,max_tokens=max_tokens)
     output_parser = StrOutputParser()
