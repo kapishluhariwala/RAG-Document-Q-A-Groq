@@ -29,7 +29,6 @@ llm_select = st.sidebar.selectbox('GROQ Language Model', ['mixtral-8x7b-32768', 
 temperature = st.sidebar.slider('Temperature', 0.0, 1.0, 0.7)
 max_tokens = st.sidebar.slider('Max Tokens', 50, 300, 150)
 
-llm = ChatGroq(model=llm_select,api_key=groq_api_key,temperature=temperature,max_tokens=max_tokens)
 
 prompt = ChatPromptTemplate.from_template(
     '''
@@ -73,31 +72,37 @@ if(uploaded_files):
                 st.toast('Embeddings created')
 
 
-output_parser = StrOutputParser()
 
-for message in st.session_state.messages:
-    with st.chat_message(message['role']):
-        st.markdown(message['content'])
-    
-if user_prompt := st.chat_input('Say Something...'):
-    st.session_state.messages.append({'role':'user', 'content':user_prompt})
-    with st.chat_message('user'):
-        st.markdown(user_prompt)
-    
-    if uploaded_files:
-        document_chain = create_stuff_documents_chain(llm, prompt)
-        retrieval_chain = create_retrieval_chain(st.session_state.retriever,document_chain)
-        response = retrieval_chain.invoke({'input': user_prompt})['answer']
+if not api_key:
+    st.info('Input GROQ API Key and HuggingFace Token...')
+
+else:
+    llm = ChatGroq(model=llm_select,api_key=groq_api_key,temperature=temperature,max_tokens=max_tokens)
+    output_parser = StrOutputParser()
+
+    for message in st.session_state.messages:
+        with st.chat_message(message['role']):
+            st.markdown(message['content'])
+        
+    if user_prompt := st.chat_input('Say Something...'):
+        st.session_state.messages.append({'role':'user', 'content':user_prompt})
+        with st.chat_message('user'):
+            st.markdown(user_prompt)
+        
+        if uploaded_files:
+            document_chain = create_stuff_documents_chain(llm, prompt)
+            retrieval_chain = create_retrieval_chain(st.session_state.retriever,document_chain)
+            response = retrieval_chain.invoke({'input': user_prompt})['answer']
 
 
-    else:
-        chain = prompt|llm|output_parser
-        response = chain.invoke({'context':'','input':user_prompt})
+        else:
+            chain = prompt|llm|output_parser
+            response = chain.invoke({'context':'','input':user_prompt})
 
-    
-    with st.chat_message("assistant"):
-        st.markdown(response)    
-    st.session_state.messages.append({"role": "assistant", "content": response})
+        
+        with st.chat_message("assistant"):
+            st.markdown(response)    
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 

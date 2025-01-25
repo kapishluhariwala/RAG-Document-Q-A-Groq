@@ -16,7 +16,7 @@ Welcome to the **RAG Chatbot** repository! This project showcases a **Retrieval-
 
 Try out the RAG Chatbot in action using our live demo:
 
-[Access the Chatbot](https://rag-chatbot---groq.streamlit.app/)
+[Access the Chatbot](https://rag-document-q-a-groq.streamlit.app/)
 
 Interact with the chatbot, test retrieval and generation capabilities, and experience real-time responses.
 
